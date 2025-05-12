@@ -349,4 +349,40 @@ router.post("/submit-registration", async (req, res) => {
       .json({ success: false, message: "Internal server error." });
   }
 });
+
+
+// routes/tdcRoutes.js
+// router.get("/check-availability", async (req, res) => {
+//     const { sport, category } = req.query;
+    
+//     try {
+//       const capacity = await SportCapacity.findOne({
+//         where: { sport, category }
+//       });
+  
+//       if (!capacity) {
+//         return res.status(404).json({
+//           success: false,
+//           message: "Sport/category combination not found"
+//         });
+//       }
+  
+//       return res.json({
+//         success: true,
+//         data: {
+//           totalSeats: capacity.totalSeats,
+//           availableSeats: capacity.totalSeats - capacity.bookedSeats,
+//           isAvailable: capacity.bookedSeats < capacity.totalSeats
+//         }
+//       });
+//     } catch (error) {
+//       console.error("Error checking availability:", error);
+//       return res.status(500).json({
+//         success: false,
+//         message: "Internal server error"
+//       });
+//     }
+//   });
+
+
 export default router;

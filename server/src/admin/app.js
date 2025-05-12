@@ -6,11 +6,11 @@ import AdminJS, { ComponentLoader } from "adminjs";
 import {
   Academy,
   Contact,
-//   Game,
+  //   Game,
   Partners,
   Program,
-//   RegistrationPayment,
-//   School,
+  //   RegistrationPayment,
+  //   School,
   SpecialCamps,
 } from "../models/init.Model.js";
 import authenticate from "./authenticateUser.js";
@@ -19,11 +19,11 @@ import { galleryResource } from "./gallery.Resource.js";
 import { userResource } from "./user.Resourse.js";
 import {
   ageGroup,
-//   manualRegistration,
-//   certificateResource,
-//   pointsTableResource,
-//   gamePointsTableResource,
-//   gameGroupResource,
+  //   manualRegistration,
+  //   certificateResource,
+  //   pointsTableResource,
+  //   gamePointsTableResource,
+  //   gameGroupResource,
   applicationResource,
   careerResource,
   FixtureResource,
@@ -35,9 +35,10 @@ import {
   FootballManualRegistrationResource,
   TDCManualRegResource,
   ThundersRegistration,
-    // PaymentTDC,
+  // PaymentTDC,
 } from "./models.Resource.js";
 import { componentLoader } from "./components.js";
+import importExportFeature from "@adminjs/import-export";
 
 AdminJS.registerAdapter(AdminJSSequelize);
 // Local provider configuration for file uploads
@@ -54,8 +55,15 @@ const admin = new AdminJS({
 
   resources: [
     /*----------------- Thunderbolts Development  Center Registration  start----------- */
-    TDCManualRegResource,
-    ThundersRegistration,
+    {
+      ...ThundersRegistration,
+      features: [importExportFeature({ componentLoader })],
+    },
+    {
+      ...TDCManualRegResource,
+      features: [importExportFeature({ componentLoader })],
+    },
+    // ThundersRegistration,
     // PaymentTDC,
     /*----------------- Thunderbolts Development  resources end----------- */
 
@@ -418,45 +426,59 @@ const admin = new AdminJS({
           list: {
             isAccessible: ({ currentAdmin }) =>
               currentAdmin &&
-            (currentAdmin.role === "Super Admin" || currentAdmin.role === "Admin" || currentAdmin.role === "Front desk" ),
-
+              (currentAdmin.role === "Super Admin" ||
+                currentAdmin.role === "Admin" ||
+                currentAdmin.role === "Front desk"),
           },
           edit: {
             isAccessible: ({ currentAdmin }) =>
               currentAdmin &&
-            (currentAdmin.role === "Super Admin" || currentAdmin.role === "Admin" || currentAdmin.role === "Front desk" ),
-
+              (currentAdmin.role === "Super Admin" ||
+                currentAdmin.role === "Admin" ||
+                currentAdmin.role === "Front desk"),
           },
           new: {
             isAccessible: ({ currentAdmin }) =>
               currentAdmin &&
-            (currentAdmin.role === "Super Admin" || currentAdmin.role === "Admin" || currentAdmin.role === "Front desk" ),
-
+              (currentAdmin.role === "Super Admin" ||
+                currentAdmin.role === "Admin" ||
+                currentAdmin.role === "Front desk"),
           },
           show: {
             isAccessible: ({ currentAdmin }) =>
               currentAdmin &&
-            (currentAdmin.role === "Super Admin" || currentAdmin.role === "Admin" || currentAdmin.role === "Front desk" ),
-
+              (currentAdmin.role === "Super Admin" ||
+                currentAdmin.role === "Admin" ||
+                currentAdmin.role === "Front desk"),
           },
           delete: {
             isAccessible: ({ currentAdmin }) =>
               currentAdmin &&
-            (currentAdmin.role === "Super Admin" || currentAdmin.role === "Admin" || currentAdmin.role === "Front desk" ),
-
+              (currentAdmin.role === "Super Admin" ||
+                currentAdmin.role === "Admin" ||
+                currentAdmin.role === "Front desk"),
           },
         },
-        listProperties: ["id", "firstName", "lastName", "email", "phone", "notes", "message"],
+        listProperties: [
+          "id",
+          "firstName",
+          "lastName",
+          "email",
+          "phone",
+          "notes",
+          "message",
+        ],
         showProperties: [
-            "id",
-            "firstName",
-            "lastName",
-            "email",
-            "phone",
-            "message",
-            "notes",
-           
-          ],
+          "id",
+          "firstName",
+          "lastName",
+          "email",
+          "phone",
+          "message",
+          "notes",
+          "createdAt",
+          "updatedAt",
+        ],
         properties: {
           message: {
             type: "textarea",

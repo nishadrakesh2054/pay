@@ -16,7 +16,7 @@ import {
 } from "../models/init.Model.js";
 // import { generateCertificates } from "./certificateGenerator.js";
 import { Components, componentLoader } from "./components.js";
-import fs from "fs";
+// import fs from "fs";
 
 import Fixture from "../models/RKmodel/dateFixtures.Model.js";
 import ResultFixture from "../models/RKmodel/resultFixture.Model.js";
@@ -30,7 +30,7 @@ import FootballManualReg from "../models/NewTdc/manualReg.Model.js";
 import ThunderBoltsReg from "../models/NewTdc/RegisterForm.Model.js";
 // import NewPaymentTDC from "../models/NewTdc/Payment.Model.js";
 
-import { generatePDF } from "./pdfgenerator.js";
+// import { generatePDF } from "./pdfgenerator.js";
 
 AdminJS.registerAdapter(AdminJSSequelize);
 
@@ -219,6 +219,8 @@ export const ThundersRegistration = {
       "amount",
       "paymentStatus",
       "paymentMethod",
+      "createdAt",
+      "updatedAt"
     ],
 
     actions: {
@@ -246,26 +248,26 @@ export const ThundersRegistration = {
           (currentAdmin && currentAdmin.role === "Super Admin") ||
           currentAdmin.role === "Admin",
       },
-      generatePDF: {
-        actionType: "resource",
-        component: Components.downloadPdf,
-        handler: async (request, response, context) => {
-          const { startDate, endDate } = request.payload;
-          const pdfFileName = await generatePDF(
-            new Date(startDate),
-            new Date(endDate)
-          );
-          return {
-            url: `/api/download-registrations/${pdfFileName}`,
-            msg: "PDF generated successfully",
-          };
-        },
-        isAccessible: ({ currentAdmin }) =>
-          currentAdmin &&
-          (currentAdmin.role === "Admin" ||
-            currentAdmin.role === "Front desk" ||
-            currentAdmin.role === "Finance Manager"),
-      },
+    //   generatePDF: {
+    //     actionType: "resource",
+    //     component: Components.downloadPdf,
+    //     handler: async (request, response, context) => {
+    //       const { startDate, endDate } = request.payload;
+    //       const pdfFileName = await generatePDF(
+    //         new Date(startDate),
+    //         new Date(endDate)
+    //       );
+    //       return {
+    //         url: `/api/download-registrations/${pdfFileName}`,
+    //         msg: "PDF generated successfully",
+    //       };
+    //     },
+    //     isAccessible: ({ currentAdmin }) =>
+    //       currentAdmin &&
+    //       (currentAdmin.role === "Admin" ||
+    //         currentAdmin.role === "Front desk" ||
+    //         currentAdmin.role === "Finance Manager"),
+    //   },
     },
   },
 };
